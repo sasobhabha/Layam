@@ -1,0 +1,1107 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layam</title>
+<style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* === BACKGROUND === */
+body {
+  background: linear-gradient(135deg, #f6c7a3, #f2a97e, #e27d4f);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  color: #7a3e1d;
+}
+
+/* === MAIN CONTAINER === */
+.container {
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* === HEADER === */
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #8c3f1f;
+  margin-bottom: 0.4rem;
+}
+
+.subtitle {
+  color: #a25a34;
+  font-size: 1rem;
+}
+
+/* === VISUALIZATION CARD === */
+.visualization {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.hand-container {
+  width: 300px;
+  height: 300px;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+.table {
+  width: 260px;
+  height: 18px;
+  background: #7a3e1d;
+  border-radius: 12px;
+  margin-top: 15px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+/* === GRID === */
+.controls-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+/* === GLASS CARD STYLE === */
+.control-group {
+  background: rgba(255,255,255,0.3);
+  backdrop-filter: blur(12px);
+  border-radius: 22px;
+  padding: 2rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* === SECTION TITLES === */
+h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid rgba(0,0,0,0.1);
+  padding-bottom: 0.5rem;
+}
+
+/* === SELECTORS === */
+.selector-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.selector-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* === BUTTONS === */
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.control-btn {
+  padding: 0.55rem 1rem;
+  border-radius: 30px;
+  border: none;
+  background: rgba(255,255,255,0.6);
+  color: #7a3e1d;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.control-btn:hover {
+  transform: translateY(-2px);
+}
+
+.control-btn.active {
+  background: #e4572e;
+  color: white;
+  box-shadow: 0 6px 15px rgba(228,87,46,0.4);
+}
+
+/* === GATI BUTTON STYLE === */
+.gati-btn.active {
+  background: #f28c38;
+}
+
+/* === SLIDERS === */
+.speed-control,
+.volume-control {
+  margin-top: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.speed-control input,
+.volume-control input {
+  flex: 1;
+  height: 6px;
+  background: rgba(0,0,0,0.15);
+  border-radius: 5px;
+  appearance: none;
+}
+
+.speed-control input::-webkit-slider-thumb,
+.volume-control input::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #e4572e;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* === START / STOP === */
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 0.7rem;
+  border-radius: 30px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.start-btn {
+  background: linear-gradient(135deg, #ff7b54, #e4572e);
+  color: white;
+}
+
+.stop-btn {
+  background: linear-gradient(135deg, #ffb347, #ff8c42);
+  color: white;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* === CURRENT TALA PANEL === */
+.current-tala h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #8c3f1f;
+}
+
+.tala-detail {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+  font-size: 0.9rem;
+}
+
+/* === BEAT DISPLAY === */
+.beat-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.2rem;
+}
+
+.beat {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.beat.active {
+  background: #e4572e;
+  color: white;
+  transform: scale(1.1);
+}
+
+/* === BEAT INFO === */
+.beat-info {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* === FINGER LEGEND === */
+.finger-info {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1.5rem;
+}
+
+.finger-symbol {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.finger-item {
+  text-align: center;
+  font-size: 0.75rem;
+}
+
+/* === INFO PANEL === */
+.info-panel {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.info-title {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 900px) {
+  .controls-grid,
+  .info-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .hand-container {
+    width: 240px;
+    height: 240px;
+  }
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1> Layam </h1>
+        </header>
+     <div class="visualization">
+            <div class="hand-container">
+                <svg class="hand" id="hand" viewBox="0 0 100 100">
+                    <!-- Hand SVG will be generated dynamically -->
+                </svg>
+            </div>
+            <div class="table"></div>
+        </div>   
+        <div class="controls-grid">
+            <div class="control-group">
+                <h2>Tala Configuration</h2>
+                
+                <div class="selector-grid">
+                    <div class="selector-group">
+                        <div class="selector-label">Sapta Tala:</div>
+                        <div class="btn-group" id="tala-buttons">
+                            <!-- Tala buttons will be generated dynamically -->
+                        </div>
+                    </div>
+                    
+                    <div class="selector-group">
+                        <div class="selector-label">Jati:</div>
+                        <div class="btn-group" id="jati-buttons">
+                            <!-- Jati buttons will be generated dynamically -->
+                        </div>
+                    </div>
+                    
+                    <div class="selector-group">
+                        <div class="selector-label">Gati (Nadai):</div>
+                        <div class="btn-group" id="gati-buttons">
+                            <!-- Gati buttons will be generated dynamically -->
+                        </div>
+                    </div>
+                    
+                    <div class="selector-group">
+                        <div class="selector-label">Laya (Speed):</div>
+                        <div class="btn-group" id="laya-buttons">
+                            <!-- Laya buttons will be generated dynamically -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="speed-control">
+                    <label for="tempo">Tempo (BPM):</label>
+                    <input type="range" id="tempo" min="40" max="240" value="120">
+                    <span id="tempo-value">120</span>
+                </div>
+                
+                <div class="volume-control">
+                    <label for="volume">Volume:</label>
+                    <input type="range" id="volume" min="0" max="100" value="80">
+                    <span id="volume-value">80%</span>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="action-btn start-btn" id="start-btn">Start</button>
+                    <button class="action-btn stop-btn" id="stop-btn">Stop</button>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <h2>Current Tala</h2>
+                <div class="current-tala">
+                    <h3 id="current-tala-name">Adi Talam</h3>
+                    <div class="tala-details">
+                        <div class="tala-detail">
+                            <span class="detail-label">Structure:</span>
+                            <span id="current-tala-structure">I4-O2-O2</span>
+                        </div>
+                        <div class="tala-detail">
+                            <span class="detail-label">Total Aksharas:</span>
+                            <span id="current-tala-aksharas">8</span>
+                        </div>
+                        <div class="tala-detail">
+                            <span class="detail-label">Jati:</span>
+                            <span id="current-jati">Chatushra</span>
+                        </div>
+                        <div class="tala-detail">
+                            <span class="detail-label">Gati:</span>
+                            <span id="current-gati">Chaturasra (4)</span>
+                        </div>
+                        <div class="tala-detail">
+                            <span class="detail-label">Laya:</span>
+                            <span id="current-laya">Madhya</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="beat-display" id="beat-display">
+                    <!-- Beats will be generated dynamically -->
+                </div>
+                
+                <div class="beat-info" id="beat-info">
+                    Ready to start...
+                </div>
+                
+                <div class="finger-info">
+                    <div class="finger-item">
+                        <div class="finger-symbol" style="background: #ff3333;">S</div>
+                        <div>Samam</div>
+                    </div>
+                    <div class="finger-item">
+                        <div class="finger-symbol" style="background: #4CAF50;">L</div>
+                        <div>Laghu</div>
+                    </div>
+                    <div class="finger-item">
+                        <div class="finger-symbol" style="background: #0096ff;">D</div>
+                        <div>Dhrutam</div>
+                    </div>
+                    <div class="finger-item">
+                        <div class="finger-symbol" style="background: #9c27b0;">A</div>
+                        <div>Anudhrutam</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="info-panel">
+            <div class="current-tala-info">
+                <h3 class="info-title">Tala Structure</h3>
+                <div class="tala-details">
+                    <div class="tala-detail">
+                        <span class="detail-label">Anga Pattern:</span>
+                        <span id="anga-pattern">Laghu (4) + Dhrutam (2) + Dhrutam (2)</span>
+                    </div>
+                    <div class="tala-detail">
+                        <span class="detail-label">Sollukattu:</span>
+                        <span id="sollukattu">Ta Ka Dhi Mi | Ta | Ka | Ta Ka Dhi Mi | Ta | Ka</span>
+                    </div>
+                    <div class="tala-detail">
+                        <span class="detail-label">Total Matras:</span>
+                        <span id="total-matras">32</span>
+                    </div>
+                    <div class="tala-detail">
+                        <span class="detail-label">Avartanam:</span>
+                        <span id="avartanam">1 cycle = 8 aksharas × 4 matras = 32 matras</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="educational-info">
+                <h3 class="info-title">About Sapta Tala System</h3>
+                <div class="info-content">
+                    <p>The <strong>Sapta Tala system</strong> consists of 7 fundamental talas, each with 5 jati variations, creating 35 possible talas.</p>
+                    <p><strong>Angas:</strong> Laghu (variable), Dhrutam (2 beats), Anudhrutam (1 beat)</p>
+                    <p><strong>Gati/Nadai:</strong> Subdivisions of beats (3, 4, 5, 7, or 9)</p>
+                    <p><strong>Laya:</strong> Speed - Vilambita (slow), Madhya (medium), Druta (fast)</p>
+                    <p>Total variations: 35 talas × 5 gatis × 3 layas = 525 possibilities</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sapta Tala System Data
+        const saptaTalas = {
+            dhruva: { name: "Dhruva", pattern: "I-O-I-I", defaultLaghu: 4, aksharas: 14 },
+            matya: { name: "Matya", pattern: "I-O-I", defaultLaghu: 4, aksharas: 10 },
+            rupaka: { name: "Rupaka", pattern: "O-I", defaultLaghu: 4, aksharas: 6 },
+            jhampa: { name: "Jhampa", pattern: "I-U-O", defaultLaghu: 7, aksharas: 10 },
+            triputa: { name: "Triputa", pattern: "I-O-O", defaultLaghu: 3, aksharas: 7 },
+            ata: { name: "Ata", pattern: "I-I-O-O", defaultLaghu: 5, aksharas: 14 },
+            eka: { name: "Eka", pattern: "I", defaultLaghu: 4, aksharas: 4 }
+        };
+
+        const jatis = {
+            tishra: { name: "Tishra", value: 3, sollukattu: "Ta Ki Ta" },
+            chatushra: { name: "Chatushra", value: 4, sollukattu: "Ta Ka Dhi Mi" },
+            khanda: { name: "Khanda", value: 5, sollukattu: "Ta Ka Ta Ki Ta" },
+            mishra: { name: "Mishra", value: 7, sollukattu: "Ta Ki Ta Ta Ka Dhi Mi" },
+            sankeerna: { name: "Sankeerna", value: 9, sollukattu: "Ta Ka Dhi Mi Ta Ka Ta Ki Ta" }
+        };
+
+        const gatis = {
+            tishra: { name: "Tishra", value: 3 },
+            chaturasra: { name: "Chaturasra", value: 4 },
+            khanda: { name: "Khanda", value: 5 },
+            mishra: { name: "Mishra", value: 7 },
+            sankeerna: { name: "Sankeerna", value: 9 }
+        };
+
+        const layas = {
+            vilambita: { name: "Vilambita", multiplier: 1, description: "Slow" },
+            madhya: { name: "Madhya", multiplier: 2, description: "Medium" },
+            druta: { name: "Druta", multiplier: 3, description: "Fast" }
+        };
+
+        // Audio Context and Setup
+        let audioContext;
+        let gainNode;
+        let oscillator;
+        let isAudioInitialized = false;
+
+        function initializeAudio() {
+            if (isAudioInitialized) return;
+            
+            try {
+                // Create audio context
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                gainNode = audioContext.createGain();
+                gainNode.connect(audioContext.destination);
+                
+                // Set initial volume
+                const volume = document.getElementById('volume').value / 100;
+                gainNode.gain.value = volume;
+                
+                isAudioInitialized = true;
+                console.log("Audio initialized successfully");
+            } catch (error) {
+                console.error("Error initializing audio:", error);
+                alert("Your browser doesn't support Web Audio API. Sound will not work.");
+            }
+        }
+
+        function playMetronomeSound(frequency = 800, duration = 0.05) {
+            if (!isAudioInitialized || !audioContext) {
+                console.log("Audio not initialized");
+                return;
+            }
+
+            try {
+                // Create oscillator for the click sound
+                oscillator = audioContext.createOscillator();
+                oscillator.connect(gainNode);
+                
+                // Configure the sound
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+                
+                // Create a sharp envelope
+                const envelope = audioContext.createGain();
+                oscillator.connect(envelope);
+                envelope.connect(gainNode);
+                
+                // Sharp attack and decay
+                envelope.gain.setValueAtTime(0, audioContext.currentTime);
+                envelope.gain.linearRampToValueAtTime(1, audioContext.currentTime + 0.001);
+                envelope.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+                
+                // Play the sound
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + duration);
+                
+            } catch (error) {
+                console.error("Error playing sound:", error);
+            }
+        }
+
+        function playSamamSound() {
+            playMetronomeSound(1000, 0.1); // Higher frequency for samam
+        }
+
+        function playRegularBeat() {
+            playMetronomeSound(600, 0.05); // Lower frequency for regular beats
+        }
+
+        // DOM elements
+        const talaButtonsContainer = document.getElementById('tala-buttons');
+        const jatiButtonsContainer = document.getElementById('jati-buttons');
+        const gatiButtonsContainer = document.getElementById('gati-buttons');
+        const layaButtonsContainer = document.getElementById('laya-buttons');
+        const startBtn = document.getElementById('start-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        const tempoSlider = document.getElementById('tempo');
+        const tempoValue = document.getElementById('tempo-value');
+        const volumeSlider = document.getElementById('volume');
+        const volumeValue = document.getElementById('volume-value');
+        const beatDisplay = document.getElementById('beat-display');
+        const beatInfo = document.getElementById('beat-info');
+        const currentTalaName = document.getElementById('current-tala-name');
+        const currentTalaStructure = document.getElementById('current-tala-structure');
+        const currentTalaAksharas = document.getElementById('current-tala-aksharas');
+        const currentJati = document.getElementById('current-jati');
+        const currentGati = document.getElementById('current-gati');
+        const currentLaya = document.getElementById('current-laya');
+        const angaPattern = document.getElementById('anga-pattern');
+        const sollukattu = document.getElementById('sollukattu');
+        const totalMatras = document.getElementById('total-matras');
+        const avartanam = document.getElementById('avartanam');
+        const handSvg = document.getElementById('hand');
+
+        // State variables
+        let currentTala = 'triputa'; // Default to Triputa (Adi Talam)
+        let currentJatiValue = 'chatushra';
+        let currentGatiValue = 'chaturasra';
+        let currentLayaValue = 'madhya';
+        let isPlaying = false;
+        let currentAkshara = 0;
+        let currentMatra = 0;
+        let intervalId = null;
+        let tempo = 120;
+
+        // Initialize
+        function init() {
+            createControlButtons();
+            updateTalaInfo();
+            createBeatDisplay();
+            createHandSvg();
+            
+            // Initialize audio on user interaction
+            document.addEventListener('click', initializeAudioOnce, { once: true });
+            
+            // Event listeners
+            startBtn.addEventListener('click', startMetronome);
+            stopBtn.addEventListener('click', stopMetronome);
+            
+            tempoSlider.addEventListener('input', () => {
+                tempo = parseInt(tempoSlider.value);
+                tempoValue.textContent = tempo;
+                
+                if (isPlaying) {
+                    stopMetronome();
+                    startMetronome();
+                }
+            });
+            
+            volumeSlider.addEventListener('input', () => {
+                const volume = parseInt(volumeSlider.value) / 100;
+                volumeValue.textContent = `${volumeSlider.value}%`;
+                if (gainNode) {
+                    gainNode.gain.value = volume;
+                }
+            });
+        }
+
+        function initializeAudioOnce() {
+            initializeAudio();
+        }
+
+        // Create control buttons
+        function createControlButtons() {
+            // Tala buttons
+            Object.keys(saptaTalas).forEach(tala => {
+                const btn = document.createElement('div');
+                btn.className = `control-btn ${tala === currentTala ? 'active' : ''}`;
+                btn.textContent = saptaTalas[tala].name;
+                btn.dataset.tala = tala;
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#tala-buttons .control-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentTala = tala;
+                    updateTalaInfo();
+                    createBeatDisplay();
+                    resetMetronome();
+                });
+                talaButtonsContainer.appendChild(btn);
+            });
+
+            // Jati buttons
+            Object.keys(jatis).forEach(jati => {
+                const btn = document.createElement('div');
+                btn.className = `control-btn ${jati === currentJatiValue ? 'active' : ''}`;
+                btn.textContent = jatis[jati].name;
+                btn.dataset.jati = jati;
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#jati-buttons .control-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentJatiValue = jati;
+                    updateTalaInfo();
+                    createBeatDisplay();
+                    resetMetronome();
+                });
+                jatiButtonsContainer.appendChild(btn);
+            });
+
+            // Gati buttons
+            Object.keys(gatis).forEach(gati => {
+                const btn = document.createElement('div');
+                btn.className = `control-btn gati-btn ${gati === currentGatiValue ? 'active' : ''}`;
+                btn.textContent = `${gatis[gati].name} (${gatis[gati].value})`;
+                btn.dataset.gati = gati;
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#gati-buttons .control-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentGatiValue = gati;
+                    updateTalaInfo();
+                    resetMetronome();
+                });
+                gatiButtonsContainer.appendChild(btn);
+            });
+
+            // Laya buttons
+            Object.keys(layas).forEach(laya => {
+                const btn = document.createElement('div');
+                btn.className = `control-btn ${laya === currentLayaValue ? 'active' : ''}`;
+                btn.textContent = layas[laya].name;
+                btn.dataset.laya = laya;
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#laya-buttons .control-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentLayaValue = laya;
+                    updateTalaInfo();
+                    resetMetronome();
+                });
+                layaButtonsContainer.appendChild(btn);
+            });
+        }
+
+        // Update tala information
+        function updateTalaInfo() {
+            const tala = saptaTalas[currentTala];
+            const jati = jatis[currentJatiValue];
+            const gati = gatis[currentGatiValue];
+            const laya = layas[currentLayaValue];
+            
+            // Calculate tala structure
+            const structure = tala.pattern
+                .replace(/I/g, `I${jati.value}`)
+                .replace(/O/g, 'O2')
+                .replace(/U/g, 'U1');
+            
+            // Calculate total aksharas
+            const totalAksharas = calculateTotalAksharas();
+            
+            currentTalaName.textContent = `${jati.name} Jati ${tala.name} Talam`;
+            currentTalaStructure.textContent = structure;
+            currentTalaAksharas.textContent = totalAksharas;
+            currentJati.textContent = jati.name;
+            currentGati.textContent = `${gati.name} (${gati.value})`;
+            currentLaya.textContent = laya.name;
+            
+            // Update detailed info
+            updateDetailedInfo(totalAksharas);
+        }
+
+        // Calculate total aksharas based on current configuration
+        function calculateTotalAksharas() {
+            const tala = saptaTalas[currentTala];
+            const jati = jatis[currentJatiValue];
+            
+            let total = 0;
+            const pattern = tala.pattern.split('-');
+            
+            pattern.forEach(anga => {
+                if (anga === 'I') {
+                    total += jati.value; // Laghu
+                } else if (anga === 'O') {
+                    total += 2; // Dhrutam
+                } else if (anga === 'U') {
+                    total += 1; // Anudhrutam
+                }
+            });
+            
+            return total;
+        }
+
+        // Update detailed tala information
+        function updateDetailedInfo(totalAksharas) {
+            const tala = saptaTalas[currentTala];
+            const jati = jatis[currentJatiValue];
+            const gati = gatis[currentGatiValue];
+            
+            // Build anga pattern description
+            const pattern = tala.pattern.split('-');
+            const angaDescriptions = [];
+            
+            pattern.forEach(anga => {
+                if (anga === 'I') {
+                    angaDescriptions.push(`Laghu (${jati.value})`);
+                } else if (anga === 'O') {
+                    angaDescriptions.push('Dhrutam (2)');
+                } else if (anga === 'U') {
+                    angaDescriptions.push('Anudhrutam (1)');
+                }
+            });
+            
+            angaPattern.textContent = angaDescriptions.join(' + ');
+            
+            // Build sollukattu
+            const sollukattuParts = [];
+            pattern.forEach(anga => {
+                if (anga === 'I') {
+                    sollukattuParts.push(jati.sollukattu);
+                } else if (anga === 'O') {
+                    sollukattuParts.push('Ta | Ka');
+                } else if (anga === 'U') {
+                    sollukattuParts.push('Ta');
+                }
+            });
+            
+            sollukattu.textContent = sollukattuParts.join(' | ');
+            
+            // Calculate total matras
+            const totalMatrasValue = totalAksharas * gati.value;
+            totalMatras.textContent = totalMatrasValue;
+            
+            // Avartanam description
+            avartanam.textContent = `1 cycle = ${totalAksharas} aksharas × ${gati.value} matras = ${totalMatrasValue} matras`;
+        }
+
+        // Create beat display
+        function createBeatDisplay() {
+            beatDisplay.innerHTML = '';
+            const totalAksharas = calculateTotalAksharas();
+            const tala = saptaTalas[currentTala];
+            const pattern = tala.pattern.split('-');
+            
+            let aksharaIndex = 0;
+            let beatNumber = 1;
+            
+            pattern.forEach(anga => {
+                let count = 0;
+                let className = '';
+                
+                if (anga === 'I') {
+                    count = jatis[currentJatiValue].value;
+                    className = 'laghu';
+                } else if (anga === 'O') {
+                    count = 2;
+                    className = 'dhrutam';
+                } else if (anga === 'U') {
+                    count = 1;
+                    className = 'anudhrutam';
+                }
+                
+                for (let i = 0; i < count; i++) {
+                    const beat = document.createElement('div');
+                    beat.className = `beat ${className}`;
+                    if (aksharaIndex === 0) beat.classList.add('sam');
+                    beat.textContent = beatNumber;
+                    beat.dataset.index = aksharaIndex;
+                    beatDisplay.appendChild(beat);
+                    
+                    aksharaIndex++;
+                    beatNumber++;
+                }
+            });
+        }
+
+        // Create hand SVG
+        function createHandSvg() {
+            updateHandSvg(0, 0);
+        }
+
+        // Update hand SVG based on current akshara and matra
+        function updateHandSvg(akshara, matra) {
+            const tala = saptaTalas[currentTala];
+            const pattern = tala.pattern.split('-');
+            const gati = gatis[currentGatiValue];
+            
+            // Determine current anga and position within it
+            let currentAnga = '';
+            let positionInAnga = 0;
+            let aksharaCount = 0;
+            
+            for (const anga of pattern) {
+                let count = 0;
+                if (anga === 'I') count = jatis[currentJatiValue].value;
+                else if (anga === 'O') count = 2;
+                else if (anga === 'U') count = 1;
+                
+                if (akshara < aksharaCount + count) {
+                    currentAnga = anga;
+                    positionInAnga = akshara - aksharaCount;
+                    break;
+                }
+                aksharaCount += count;
+            }
+            
+            // Generate hand SVG based on current state
+            handSvg.innerHTML = generateHandSvg(currentAnga, positionInAnga, matra, gati.value);
+        }
+
+        // Generate hand SVG based on current state
+        function generateHandSvg(anga, positionInAnga, matra, gatiValue) {
+            let svg = `
+                <!-- Palm -->
+                <ellipse cx="50" cy="60" rx="25" ry="15" fill="#e0a889" />
+                
+                <!-- Wrist -->
+                <rect x="45" y="70" width="10" height="20" fill="#e0a889" />
+            `;
+            
+            // Thumb
+            svg += `<path d="M 30,50 Q 25,40 30,30 Q 35,25 40,30 L 45,45 Z" fill="#e0a889" />`;
+            
+            // Determine hand gesture based on anga and position
+            let fingerColor = "#e0a889";
+            let showFingers = false;
+            let showPalm = false;
+            
+            if (anga === 'I') {
+                // Laghu - use fingers
+                showFingers = true;
+                fingerColor = "#4CAF50";
+            } else if (anga === 'O') {
+                // Dhrutam - use palm
+                showPalm = true;
+                fingerColor = "#0096ff";
+            } else if (anga === 'U') {
+                // Anudhrutam - single beat
+                showPalm = true;
+                fingerColor = "#9c27b0";
+            }
+            
+            // Fingers
+            const fingerPositions = [
+                { cx: 35, cy: 35, rx: 8, ry: 12 }, // Pinkie
+                { cx: 45, cy: 30, rx: 8, ry: 12 }, // Ring
+                { cx: 55, cy: 30, rx: 8, ry: 12 }, // Middle
+                { cx: 65, cy: 35, rx: 8, ry: 12 }  // Index
+            ];
+            
+            if (showFingers) {
+                // Highlight the appropriate finger based on position in laghu
+                fingerPositions.forEach((pos, index) => {
+                    const isActive = index === positionInAnga;
+                    const fillColor = isActive ? fingerColor : "#e0a889";
+                    
+                    svg += `<ellipse cx="${pos.cx}" cy="${pos.cy}" rx="${pos.rx}" ry="${pos.ry}" fill="${fillColor}" />`;
+                    
+                    // Finger lines
+                    const lineY = pos.cy + 10;
+                    svg += `<line x1="${pos.cx}" y1="${pos.cy + 5}" x2="${pos.cx}" y2="${lineY}" stroke="#d4a574" stroke-width="2" />`;
+                });
+            } else if (showPalm) {
+                // Highlight palm for dhrutam/anudhrutam
+                svg += `<ellipse cx="50" cy="60" rx="25" ry="15" fill="${fingerColor}" />`;
+                
+                // Add fingers in neutral position
+                fingerPositions.forEach((pos) => {
+                    svg += `<ellipse cx="${pos.cx}" cy="${pos.cy}" rx="${pos.rx}" ry="${pos.ry}" fill="#e0a889" />`;
+                    
+                    // Finger lines
+                    const lineY = pos.cy + 10;
+                    svg += `<line x1="${pos.cx}" y1="${pos.cy + 5}" x2="${pos.cx}" y2="${lineY}" stroke="#d4a574" stroke-width="2" />`;
+                });
+            }
+            
+            // Add gati visualization (dots for subdivisions)
+            if (matra > 0 && gatiValue > 1) {
+                const dotRadius = 3;
+                const dotSpacing = 6;
+                const startX = 50 - ((gatiValue - 1) * dotSpacing) / 2;
+                
+                for (let i = 0; i < gatiValue; i++) {
+                    const x = startX + i * dotSpacing;
+                    const y = 80;
+                    const isActive = i < matra;
+                    const fillColor = isActive ? "#ffcc00" : "rgba(255, 255, 255, 0.3)";
+                    
+                    svg += `<circle cx="${x}" cy="${y}" r="${dotRadius}" fill="${fillColor}" />`;
+                }
+            }
+            
+            return svg;
+        }
+
+        // Start metronome
+        function startMetronome() {
+            if (isPlaying) return;
+            
+            // Ensure audio is initialized
+            initializeAudio();
+            
+            isPlaying = true;
+            const gati = gatis[currentGatiValue];
+            const laya = layas[currentLayaValue];
+            const interval = 60000 / (tempo * gati.value * laya.multiplier);
+            
+            intervalId = setInterval(() => {
+                playBeat();
+            }, interval);
+            
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+        }
+
+        // Stop metronome
+        function stopMetronome() {
+            if (!isPlaying) return;
+            
+            isPlaying = false;
+            clearInterval(intervalId);
+            
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            
+            // Reset hand position
+            handSvg.style.transform = 'translateY(0)';
+        }
+
+        // Reset metronome
+        function resetMetronome() {
+            stopMetronome();
+            currentAkshara = 0;
+            currentMatra = 0;
+            
+            // Reset beat display
+            document.querySelectorAll('.beat').forEach(beat => {
+                beat.classList.remove('active');
+            });
+            
+            beatInfo.textContent = "Ready to start...";
+            updateHandSvg(0, 0);
+        }
+
+        // Play a beat
+        function playBeat() {
+            const totalAksharas = calculateTotalAksharas();
+            const gati = gatis[currentGatiValue];
+            
+            // Handle matras (subdivisions)
+            currentMatra++;
+            
+            if (currentMatra >= gati.value) {
+                // Move to next akshara
+                currentMatra = 0;
+                currentAkshara = (currentAkshara + 1) % totalAksharas;
+                
+                // Play sound on akshara beat
+                if (currentAkshara === 0) {
+                    playSamamSound(); // Special sound for samam
+                } else {
+                    playRegularBeat(); // Regular sound for other beats
+                }
+                
+                // Reset previous beat
+                document.querySelectorAll('.beat').forEach(beat => {
+                    beat.classList.remove('active');
+                });
+                
+                // Activate current beat
+                const currentBeatElement = document.querySelector(`.beat[data-index="${currentAkshara}"]`);
+                if (currentBeatElement) {
+                    currentBeatElement.classList.add('active');
+                }
+                
+                // Animate hand on main beats
+                handSvg.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    handSvg.style.transform = 'translateY(0)';
+                }, 100);
+            }
+            
+            // Update hand visualization
+            updateHandSvg(currentAkshara, currentMatra);
+            
+            // Update beat info
+            updateBeatInfo();
+        }
+
+        // Update beat information display
+        function updateBeatInfo() {
+            const totalAksharas = calculateTotalAksharas();
+            const gati = gatis[currentGatiValue];
+            const tala = saptaTalas[currentTala];
+            const pattern = tala.pattern.split('-');
+            
+            const aksharaNumber = currentAkshara + 1;
+            const matraNumber = currentMatra + 1;
+            
+            // Determine current anga and position
+            let currentAnga = '';
+            let positionInAnga = 0;
+            let aksharaCount = 0;
+            let angaIndex = 0;
+            
+            for (const anga of pattern) {
+                let count = 0;
+                if (anga === 'I') count = jatis[currentJatiValue].value;
+                else if (anga === 'O') count = 2;
+                else if (anga === 'U') count = 1;
+                
+                if (currentAkshara < aksharaCount + count) {
+                    currentAnga = anga;
+                    positionInAnga = currentAkshara - aksharaCount;
+                    break;
+                }
+                aksharaCount += count;
+                angaIndex++;
+            }
+            
+            let angaType = '';
+            if (currentAnga === 'I') angaType = 'Laghu';
+            else if (currentAnga === 'O') angaType = 'Dhrutam';
+            else if (currentAnga === 'U') angaType = 'Anudhrutam';
+            
+            const isSamam = currentAkshara === 0 && currentMatra === 0;
+            
+            if (isSamam) {
+                beatInfo.textContent = `SAMAM - Akshara ${aksharaNumber}/${totalAksharas} - ${angaType} (${positionInAnga + 1})`;
+            } else {
+                beatInfo.textContent = `Akshara ${aksharaNumber}/${totalAksharas} - ${angaType} (${positionInAnga + 1}) - Matra ${matraNumber}/${gati.value}`;
+            }
+        }
+
+        // Initialize the application
+        init();
+    </script>
+</body>
+</html>
